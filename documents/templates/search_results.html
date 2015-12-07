@@ -1,0 +1,10 @@
+<h1>Search results for {{ search_term }}</h1>
+<ul>
+    {% for document in documents %}
+        <li>
+            <p>{{forloop.counter}}</p>
+            <p>title: {{ document.title }} </p>
+            <p>text: {{ document.text }}   </p>
+        </li>
+    {% endfor %}
+</ul>
