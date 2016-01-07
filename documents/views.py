@@ -11,7 +11,6 @@ def search(request):
         form = DocumentSearchForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            print(form.cleaned_data)
             search_results = Document.objects.search(form.cleaned_data['search_term'])
             return render(request, 'search_results.html', {'documents': search_results, 'search_term': form.cleaned_data['search_term']})
 
