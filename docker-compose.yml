@@ -1,0 +1,40 @@
+version: "2"
+
+---
+volumes:
+  postgresql-data:
+    driver: local
+  django-data:
+    driver: local
+
+
+---
+services:
+  db:
+    image: postgres:9.0
+    ports:
+    - 5433:5432
+    volumes:
+    - postgresql-data:/var/lib/postgresql/data
+    env_file:
+    - dev.env
+  web:
+    image: your_image_name_here:latest
+    build:
+      context: "."
+      dockerfile: dev.Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+    - 8000:8000
+    working_dir: "/usr/src/app"
+    volumes:
+    - ".:/usr/src/app"
+    - django-data:/usr/local
+    stdin_open: true
+    tty: true
+    links:
+    - db
+    depends_on:
+    - db
+    env_file:
+    - dev.env
